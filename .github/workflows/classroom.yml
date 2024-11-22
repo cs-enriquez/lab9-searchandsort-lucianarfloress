@@ -1,0 +1,80 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: printArray
+      id: printarray
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: printArray
+        setup-command: ''
+        command: make test try=printArray
+        timeout: 1
+        max-score: 10
+    - name: seqSearch
+      id: seqsearch
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: seqSearch
+        setup-command: ''
+        command: make test try=seqSearch
+        timeout: 1
+        max-score: 10
+    - name: binSearchR
+      id: binsearchr
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: binSearchR
+        setup-command: ''
+        command: make test try=binSearchR
+        timeout: 1
+        max-score: 20
+    - name: swap
+      id: swap
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: swap
+        setup-command: ''
+        command: make test try=minFind
+        timeout: 1
+        max-score: 20
+    - name: minFind
+      id: minfind
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: minFind
+        setup-command: ''
+        command: make test try=minFind
+        timeout: 1
+        max-score: 20
+    - name: newSort
+      id: newsort
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: newSort
+        setup-command: ''
+        command: make test try=newSort
+        timeout: 1
+        max-score: 20
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PRINTARRAY_RESULTS: "${{steps.printarray.outputs.result}}"
+        SEQSEARCH_RESULTS: "${{steps.seqsearch.outputs.result}}"
+        BINSEARCHR_RESULTS: "${{steps.binsearchr.outputs.result}}"
+        SWAP_RESULTS: "${{steps.swap.outputs.result}}"
+        MINFIND_RESULTS: "${{steps.minfind.outputs.result}}"
+        NEWSORT_RESULTS: "${{steps.newsort.outputs.result}}"
+      with:
+        runners: printarray,seqsearch,binsearchr,swap,minfind,newsort
