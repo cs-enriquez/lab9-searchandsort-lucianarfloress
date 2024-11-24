@@ -6,8 +6,8 @@ using namespace std;
 // write a function to print the contents of your array
 //   bonus! try to implement your function so that it can accept
 //     many types of data (int, char, string, etc.)
-template <typename flexibleType> // ???
-void printArray(...) {}
+template <typename flexibleType> // flexibleType is a templete parameter
+void printArray(flexibleType arr[], int length) {}
 
 // Implement a sequential search algorithm
 // your function should search for a target value (target)
@@ -15,6 +15,14 @@ void printArray(...) {}
 // return true if target exists in the array within this range,
 //    return false otherwise
 bool seqSearch(string target, string arr[], int start, int end) {
+    if(start > end || start < 0 ) {
+        return false;
+    }
+    for(int i = start; i <= end; i++) {
+        if(arr[i] == target) {
+            return true;
+        }
+    }
     return false;
 }
 
