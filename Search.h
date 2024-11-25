@@ -52,11 +52,27 @@ bool binSearch(float target, float arr[], int n) {
 // Return true if target exists in the array with size n
 //   return false otherwise
 bool binSearchR(char target, char charray[], int n) {
-    // base case
+    // base case: if array size is 0
+    if (n < 0) {
+        return false;
+    }
 
-    //general case
+    int middle = n / 2;
 
-    return false;
+    // base case: we found the target
+    if(charray[middle] == target) {
+        return true;
+    }
+    
+    // recursive case
+    if(target > charray[middle]) { // target is larger than the middle
+        char *rightside = &charray[middle + 1];
+        int rigthsize = n - middle - 1;
+        return binSearchR(target, rightside, rigthsize);
+    }
+    else {
+        return binSearchR(target, charray, middle);
+    }
 }
 
 // Implement a brand new sorting algorithm
@@ -80,10 +96,33 @@ Step 3: Finally, use your two functions above to complete the following in newSo
         *** You can make this recursive, if you wish!
 */
 
-void swap(double darray[], ...) {}
-
-int minFind(double darray[], ...) {
-    return -1;
+void swap(double darray[], int one, int two) {
+    double tmp = darray[one];
+    darray[one] = darray[two];
+    darray[two] = tmp;
 }
 
-void newSort(double darray[], int n) {}
+int minFind(double darray[], int length) {
+    int minIndex = 0;
+    
+    for (int i = 1; i < length; i++) {
+        if (darray[i] < darray[minIndex]) {
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+void newSort(double darray[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        double temp[n-i];
+        for(int j = 0; j < n-i; j++) {
+            temp[j] = darray[i+j];
+        }
+        
+        int minIndex = minFind(temp, n-i);
+
+        minIndex += i;
+        swap(darray, i, minIndex);
+    }
+}
