@@ -30,7 +30,22 @@ bool seqSearch(string target, string arr[], int start, int end) {
 // Return true if target exists in the array with size n,
 //    return false otherwise 
 bool binSearch(float target, float arr[], int n) {
-    return false;	
+    int start = 0;
+    int end = n - 1;
+    int middle = (start + end) / 2;
+    while(start <= end) {
+        if (arr[middle] == target) {
+            return true;
+        }
+        else if(arr[middle] < target) {
+            start = middle + 1;
+        }
+        else {
+            end = middle - 1;
+        }
+        middle = (start + end) / 2;
+    }
+   return false;	
 }
 
 // Implement a recursive binary search 
